@@ -7,25 +7,38 @@
     >
       <!-- 侧边栏 -->
       <aside
-        class="hidden chat-sidebar max-w-[250px] sm:block w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl"
+        class="hidden chat-sidebar max-w-[300px] sm:block w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl"
       >
         <!-- 添加新会话 -->
         <div class="flex justify-start m-5">
-          <button class="btn btn-primary rounded-full text-4xl">
+          <button
+            @click="startNewChat"
+            class="btn btn-primary rounded-full text-4xl"
+          >
             + <span class="text-xl">添加新会话</span>
           </button>
         </div>
         <!-- 会话窗口 -->
-        <div class="chat-cards flex flex-col gap-1 overflow-y-auto">
+        <div
+          class="chat-cards flex flex-col gap-1 max-h-[700px] p-4 overflow-y-auto"
+        >
           <div
-            class="chat-card flex justify-between flex-1 items-center p-4 bg-gray-800 rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 duration-150"
+            v-for="chat in chatHistory"
+            :key="chat.id"
+            @click="switchChat(chat.id)"
+            class="chat-card flex justify-between flex-1 items-center p-4 bg-gray-800 rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 ease-in-out duration-150"
+            :class="
+              currentChatID === chat.id
+                ? 'bg-purple-600 transform scale-105 hover:bg-purple-500'
+                : ''
+            "
           >
-            <h3>新的聊天</h3>
+            <h3>{{ chat.title }}</h3>
             <div class="hamburger">
               <button
                 class="btn rounded-full btn-ghost btn-square size-8"
-                popovertarget="popover-1"
-                style="anchor-name: --anchor-1"
+                :popovertarget="chat.id"
+                :style="{ anchorName: chat.id }"
               >
                 <svg
                   class="swap-off fill-current"
@@ -42,20 +55,20 @@
               <ul
                 class="dropdown menu w-18 rounded-box shadow-sm dropdown-right bg-white/80"
                 popover
-                id="popover-1"
-                style="position-anchor: --anchor-1"
+                :id="chat.id"
+                :style="{ positionAnchor: chat.id }"
               >
-                <li class="text-black"><a>置顶</a></li>
-                <li class="text-black"><a>编辑</a></li>
-                <li class="text-red-500"><a>删除</a></li>
+                <li class="text-black" @click.stop="pinChat(chat.id)">
+                  <a>置顶</a>
+                </li>
+                <li class="text-black" @click.stop="editChatTitle(chat.id)">
+                  <a>编辑</a>
+                </li>
+                <li class="text-red-500" @click.stop="deleteChat(chat.id)">
+                  <a>删除</a>
+                </li>
               </ul>
             </div>
-          </div>
-          <div
-            class="chat-card flex flex-col flex-1 justify-center p-4 bg-gray-800 rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 duration-150"
-          >
-            <h3>新的聊天</h3>
-            <div class="flex gap-4 text-sm text-gray-400"></div>
           </div>
         </div>
       </aside>
@@ -65,6 +78,7 @@
       >
         <!-- 消息框 -->
         <div
+          ref="chatBox"
           class="chat-box w-full flex-1 flex flex-col overflow-y-auto my-2 p-4"
         >
           <div
@@ -89,7 +103,7 @@
               <p>{{ message.content }}</p>
             </div>
           </template>
-          <div v-if="isLoding" class="mr-auto bg-white p-4 rounded-lg h-fit">
+          <div v-if="isLoading" class="mr-auto bg-white p-4 rounded-lg h-fit">
             <p>thinking...</p>
           </div>
         </div>
@@ -103,7 +117,8 @@
               class="input input-ghost shadow-lg bg-white/60 rounded-2xl w-full"
             />
             <button
-              class="bg-white/50 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
+              class="disabled:bg-black bg-white/50 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
+              :disabled="isLoading"
             >
               <svg
                 t="1742632205333"
@@ -130,19 +145,22 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, useTemplateRef } from "vue";
 import callARK from "../utils/axios";
 import { modelID } from "../api/ARK_API";
+import { uid } from "uid";
 
 // 状态管理
 const userInput = ref("");
-const isLoding = ref(false);
+const isLoading = ref(false);
 const chatHistory = ref([]);
-const currentChatIndex = ref(0);
+const currentChatID = ref(null);
 const currentChat = ref({
   module: `${modelID}`,
   messages: [],
 });
+
+const chatBox = useTemplateRef("chatBox");
 
 // 计算当前聊天
 // const currentChat = computed(() => {
@@ -150,9 +168,63 @@ const currentChat = ref({
 //   return chatHistory.value[currentChatIndex.value];
 // });
 
+//初始化
+onMounted(() => {
+  // 从本地存储加载聊天历史
+  const savedChats = localStorage.getItem("mindFreeChats");
+  if (savedChats) {
+    chatHistory.value = JSON.parse(savedChats);
+  }
+});
+
+// 保存聊天历史到本地存储
+const saveChats = () => {
+  localStorage.setItem("mindFreeChats", JSON.stringify(chatHistory.value));
+};
+
+// 创建新聊天
+const startNewChat = () => {
+  chatHistory.value.unshift({
+    id: uid(),
+    title: `聊天 ${chatHistory.value.length + 1}`,
+    messages: [],
+    createdAt: new Date().toISOString(),
+  });
+  currentChatIndex.value = 0;
+  saveChats();
+};
+
+// 切换到指定聊天
+const switchChat = (chatID) => {
+  currentChatID.value = chatID;
+};
+
+// 置顶聊天 (待开发。。。)
+const pinChat = (chatID) => {};
+
+// 删除聊天
+const deleteChat = (chatID) => {
+  chatHistory.value = chatHistory.value.filter((item) => {
+    return item.id !== chatID;
+  });
+  saveChats();
+};
+
+// 编辑聊天标题
+const editChatTitle = (chatID) => {
+  const editedChat = chatHistory.value.find((chat) => {
+    return chat.id === chatID;
+  });
+  editedChat.title = prompt("输入新的标题:", editedChat.title);
+  // 限制标题长度
+  editedChat.title =
+    editedChat.title.slice(0, 20) + (editedChat.title.length > 20 ? "..." : "");
+  saveChats();
+};
+
 // 发送消息
 const sendMessage = async () => {
-  if (!userInput.value.trim() || isLoding.value) return; // 如果没有输入或者正在加载，则不发送消息
+  if (!userInput.value.trim() || isLoading.value) return; // 如果没有输入或者正在加载，则不发送消息
 
   // 添加用户消息
   const userMessage = {
@@ -164,6 +236,10 @@ const sendMessage = async () => {
   console.log(currentChat.value);
   userInput.value = "";
 
+  // 根据聊天主题渲染标题（待开发。。。）
+
+  // 显示加载状态
+  isLoading.value = true;
   try {
     // 添加系统消息设置AI角色
     currentChat.value.messages.unshift({
@@ -190,7 +266,15 @@ const sendMessage = async () => {
       role: "assistant",
       content: "抱歉，我暂时无法回应。请稍后再试。",
     });
+  } finally {
+    isLoading.value = false;
   }
+  // 滚动到底部
+  setTimeout(() => {
+    if (chatBox.value) {
+      chatBox.value.scrollTop = chatBox.value.scrollHeight;
+    }
+  }, 100);
 };
 </script>
 

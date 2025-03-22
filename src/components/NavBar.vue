@@ -17,6 +17,12 @@
         </a>
         <div class="signin">
           <button
+            @click="userStore.forTest"
+            class="bg-red-400 py-2 px-4 rounded-2xl hover:cursor-pointer hover:bg-red-500 text-white"
+          >
+            for test
+          </button>
+          <button
             @click="login"
             class="relative inline-flex items-center justify-center w-20 transition-all duration-300 ease-in-out bg-gradient-to-tr from-[#8bdaf0] to-blue-500 hover:from-[#62a9bd] hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg"
           >
@@ -30,8 +36,11 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { useUserInfoStore } from "../Stores/UserInfoStore";
 
+const userStore = useUserInfoStore();
 const router = useRouter();
+
 const login = () => {
   router.push("/chatView");
 };

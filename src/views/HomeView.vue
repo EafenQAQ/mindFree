@@ -1,5 +1,5 @@
 <template>
-  <NavBar />
+ 
   <main class="flex flex-col mx-auto w-full -mt-32">
     <!-- 背景矢量图 -->
       <img 

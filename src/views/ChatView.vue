@@ -118,6 +118,13 @@
                 </div>
               </div>
             </div>
+            <!-- tokens用量 -->
+            <div class="flex items-center justify-center">
+              <p class="text-sm text-gray-500">
+                <span class="text-gray-500">Tokens:</span>
+                {{ tokensUsage }}
+              </p>
+            </div>
           </template>
           <div v-if="isLoading" class="mr-auto bg-white p-4 rounded-lg h-fit">
             <p>thinking...</p>
@@ -171,6 +178,7 @@ const userInput = ref("");
 const isLoading = ref(false);
 const chatHistory = ref([]);
 const currentChatID = ref(null);
+const tokensUsage = ref(0);
 // const currentChat = ref({
 //   module: `${modelID}`,
 //   messages: [],
@@ -274,12 +282,14 @@ const sendMessage = async () => {
       model: modelID,
       messages: currentChat.value.messages,
     });
-    console.log(res.data);
     // 添加AI回复
     currentChat.value.messages.push({
       role: "assistant",
       content: res.data.choices[0].message.content,
     });
+
+    // 显示tokens用量
+    tokensUsage.value = res.data.usage.total_tokens;
   } catch (err) {
     console.log(err);
     // 添加错误消息
@@ -289,6 +299,7 @@ const sendMessage = async () => {
     });
   } finally {
     isLoading.value = false;
+    saveChats();
   }
   // 滚动到底部
   setTimeout(() => {

@@ -18,6 +18,7 @@
             + <span class="text-xl">添加新会话</span>
           </button>
         </div>
+
         <!-- 会话窗口 -->
         <div
           class="chat-cards flex flex-col gap-1 max-h-[700px] p-4 overflow-y-auto"
@@ -93,14 +94,29 @@
               v-for="(message, msgIndex) in currentChat?.messages"
               :key="msgIndex"
               :hidden="message.role === 'system'"
-              :class="[
-                'mb-4 p-4 max-w-[80%] rounded-lg h-fit',
-                message.role === 'user'
-                  ? 'ml-auto bg-blue-300 text-white'
-                  : 'mr-auto bg-purple-800 text-white',
-              ]"
             >
-              <p>{{ message.content }}</p>
+              <div
+                class="flex items-start gap-2"
+                :class="[message.role === 'user' ? '' : 'flex-row-reverse']"
+              >
+                <p
+                  :class="[
+                    'mb-4 p-4 max-w-[80%] rounded-lg h-fit',
+                    message.role === 'user'
+                      ? 'ml-auto bg-blue-500/60 text-white'
+                      : 'mr-auto bg-purple-800 text-white',
+                  ]"
+                >
+                  {{ message.content }}
+                </p>
+                <div class="avatar">
+                  <div
+                    class="ring-primary ring-offset-base-100 w-10 mt-1.5 rounded-full ring ring-offset-2"
+                  >
+                    <img src="../assets/avatars/head_5.jpg" />
+                  </div>
+                </div>
+              </div>
             </div>
           </template>
           <div v-if="isLoading" class="mr-auto bg-white p-4 rounded-lg h-fit">
@@ -155,18 +171,24 @@ const userInput = ref("");
 const isLoading = ref(false);
 const chatHistory = ref([]);
 const currentChatID = ref(null);
-const currentChat = ref({
-  module: `${modelID}`,
-  messages: [],
-});
+// const currentChat = ref({
+//   module: `${modelID}`,
+//   messages: [],
+// });
 
 const chatBox = useTemplateRef("chatBox");
 
+// 系统提示词
+const SYSTEM_PROMPT =
+  "你是MindFree，一个专业、富有同情心的心理咨询师。你具有人本主义的理念，擅长运用真诚、温暖、无条件积极关注等技术和来访者建立链接。你的回答应该像一个人类，而不是AI，你的目标是倾听用户的问题，提供情感支持，请用温暖、理解的语气回应，避免给出医疗诊断或替代专业心理健康咨询。对于严重的心理健康问题，建议用户寻求专业帮助。";
+
 // 计算当前聊天
-// const currentChat = computed(() => {
-//   if (chatHistory.value.length === 0) return null;
-//   return chatHistory.value[currentChatIndex.value];
-// });
+const currentChat = computed(() => {
+  if (!currentChatID.value) return null;
+  return (
+    chatHistory.value.find((chat) => chat.id === currentChatID.value) || null
+  );
+});
 
 //初始化
 onMounted(() => {
@@ -190,7 +212,6 @@ const startNewChat = () => {
     messages: [],
     createdAt: new Date().toISOString(),
   });
-  currentChatIndex.value = 0;
   saveChats();
 };
 
@@ -222,14 +243,14 @@ const editChatTitle = (chatID) => {
   saveChats();
 };
 
-// 发送消息
+// ***发送消息***
 const sendMessage = async () => {
   if (!userInput.value.trim() || isLoading.value) return; // 如果没有输入或者正在加载，则不发送消息
 
   // 添加用户消息
   const userMessage = {
     role: "user",
-    content: userInput.value,
+    content: userInput.value.trim(),
   };
 
   currentChat.value.messages.push(userMessage);
@@ -245,7 +266,7 @@ const sendMessage = async () => {
     currentChat.value.messages.unshift({
       role: "system",
       content:
-        "你是MindFree，一个专业、富有同情心的心理咨询师。你具有人本主义的理念，擅长运用真诚、温暖、无条件积极关注等技术和来访者建立链接。你的回答应该像一个人类，而不是AI，你的目标是倾听用户的问题，提供情感支持，请用温暖、理解的语气回应，避免给出医疗诊断或替代专业心理健康咨询。对于严重的心理健康问题，建议用户寻求专业帮助。",
+        "你是MindFree，一个专业、富有同情心的心理咨询师。你具有人本主义的理念，擅长运用真诚、温暖、无条件积极关注等技术和来访者建立链接。你的回答不要过于冗长，应该像一个人类，而不是AI，你的目标是倾听用户的问题，提供情感支持，请用温暖、理解的语气回应。对于严重的心理健康问题，建议用户寻求专业帮助。",
     });
 
     // 发送请求到llm

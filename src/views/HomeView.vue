@@ -19,8 +19,7 @@
   </main>
 
   <img src="../assets/R.jpg" alt="bgImg">
-  <img src="../assets/R.jpg" alt="bgImg">
-  <img src="../assets/R.jpg" alt="bgImg">
+  
 </template>
 
 <script>

@@ -4,9 +4,9 @@ import { useRouter } from "vue-router";
 
 export const useUserInfoStore = defineStore("userInfo", {
   state: () => ({
-    userInfo: ref({}),
-    isLogin: ref(false),
-    isLoading: ref(false),
+    userInfo: "",
+    isLogin: false,
+    isLoading: false,
   }),
   getters: {},
   actions: {

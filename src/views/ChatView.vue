@@ -1,7 +1,7 @@
 <template>
   <div
     id="chatView"
-    class="backdrop bg-gradient-to-t from-blue-900/50 to-blue-100/50 h-screen -z-10 p-5 -mt-32"
+    class="backdrop overflow-y-clip bg-gradient-to-t from-blue-900/50 to-blue-100/50 h-screen -z-10 p-5 -mt-32"
   >
     <div
       class="chat-container flex items-center justify-center h-screen gap-4 mt-10"

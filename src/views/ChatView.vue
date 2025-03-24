@@ -285,6 +285,15 @@ const currentChat = computed(() => {
   );
 });
 
+// 初始化创建聊天
+const createChat = () => {
+  chatHistory.value.push({
+    id: uid(),
+    messages: [],
+    title: "新聊天",
+  });
+};
+
 //初始化
 onMounted(() => {
   // 从本地存储加载聊天历史
@@ -295,6 +304,10 @@ onMounted(() => {
 
   // 初始化默认为第一个聊天
   if (!currentChatID.value) {
+    // 如果没有聊天，就创建一个
+    if (!chatHistory.value.length) {
+      createChat();
+    }
     currentChatID.value = chatHistory.value[0].id;
   }
 });

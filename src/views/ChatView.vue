@@ -97,14 +97,22 @@
       <main
         class="flex flex-col items-center p-5 justify-between chat-main w-3/4 h-4/5 bg-white/50 rounded-lg shadow-xl"
       >
-        <!-- <button
-          @click="openSidebar"
-          class="btn btn-ghost sm:hidden self-start hover:bg-white/30 rounded-full text-xl"
-        >
-          ...
-        </button> -->
-        <!-- 隐藏的侧边栏 -->
-        <ChatBar class="self-start" />
+        <ChatBar
+          class="self-start"
+          :chatHistory="chatHistory"
+          @addNewChat="
+            (chatID) => {
+              deleteChat(chatID);
+            }
+          "
+          @deleteChat="deleteChat"
+          @propSwitchChat="
+            (chatID) => {
+              switchChat(chatID);
+            }
+          "
+        />
+
         <!-- 消息框 -->
 
         <div
@@ -210,7 +218,6 @@ const chatHistory = ref([]);
 const currentChatID = ref(null);
 const tokensUsage = ref(0);
 const isSidebarOpen = ref(true);
-const viewWidth = ref(window.innerWidth);
 
 // 页面元素索引
 const chatBox = useTemplateRef("chatBox");
@@ -311,6 +318,11 @@ const startNewChat = () => {
 // 切换到指定聊天
 const switchChat = (chatID) => {
   currentChatID.value = chatID;
+};
+
+// 字组件事件
+const getSwitchChat = (chatID) => {
+  console.log("传到了！", chatID);
 };
 
 // 置顶聊天 (待开发。。。)

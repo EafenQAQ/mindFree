@@ -1,25 +1,32 @@
 <template>
-  <div class="backdrop bg-gradient-to-t from-blue-900/50 to-blue-100/50 h-screen -z-10 p-5 -mt-32">
+  <div id="chatView" class="backdrop bg-gradient-to-t from-blue-900/50 to-blue-100/50 h-screen -z-10 p-5 -mt-32">
     <div class="chat-container flex items-center justify-center h-screen gap-4 mt-10">
+
       <!-- 侧边栏 -->
-      <aside class="hidden chat-sidebar max-w-[300px] sm:block w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl">
+      <aside :class="['chat-sidebar', !isSidebarOpen ? 'sideBar-hidden' : 'overflow-y-auto']"
+        class="hidden sm:block max-w-[300px] w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl transition-transform duration-300 ease-in-out">
         <!-- 添加新会话 -->
-        <div class="flex justify-start m-5">
-          <button @click="startNewChat" class="btn btn-primary rounded-full text-4xl">
-            + <span class="text-xl">添加新会话</span>
+        <div class="flex justify-between m-5" :class="{ 'plusBtn': !isSidebarOpen }">
+          <button @click="startNewChat" class="btn btn-ghost hover:bg-white/30 rounded-full text-4xl">
+            + <span ref="newChatBtnString" class="text-xl">添加新会话</span>
           </button>
+          <button @click="toggleSidebar" class="btn btn-ghost hover:bg-white/30 rounded-full text-xl">...</button>
         </div>
 
+
         <!-- 会话窗口 -->
-        <div class="chat-cards flex flex-col gap-1 max-h-[700px] p-4 overflow-y-auto">
+        <div ref="chatCards" class="chat-cards flex flex-col gap-1 max-h-[700px] p-4">
           <div v-for="chat in chatHistory" :key="chat.id" @click="switchChat(chat.id)"
             class="chat-card flex justify-between flex-1 items-center p-4 bg-gray-800 rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 ease-in-out duration-150"
-            :class="currentChatID === chat.id
+            :class="[currentChatID === chat.id
               ? 'bg-purple-600 transform scale-105 hover:bg-purple-500'
-              : ''
-              ">
+              : '',
+            { 'chat-card-hidden': !isSidebarOpen }
+
+            ]">
             <h3>{{ chat.title }}</h3>
-            <div class="hamburger">
+            <!-- 汉堡 -->
+            <div class="hamburger" :class="{ 'hamburger-hidden': !isSidebarOpen }">
               <button class="btn rounded-full btn-ghost btn-square size-8" :popovertarget="chat.id"
                 :style="{ anchorName: chat.id }">
                 <svg class="swap-off fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
@@ -46,8 +53,12 @@
       <!-- 主体聊天框 -->
       <main
         class="flex flex-col items-center p-5 justify-between chat-main w-3/4 h-4/5 bg-white/50 rounded-lg shadow-xl">
+        <button @click="openSidebar"
+          class="btn btn-ghost sm:hidden self-start hover:bg-white/30 rounded-full text-xl">...</button>
         <!-- 消息框 -->
+
         <div ref="chatBox" class="chat-box w-full flex-1 flex flex-col overflow-y-auto my-2 p-4">
+
           <div v-if="currentChat && currentChat.messages.length === 0"
             class="flex flex-col items-center justify-center h-full text-gray-500">
             <p class="text-xl mb-2">欢迎来到 MindFree</p>
@@ -120,12 +131,66 @@ const isLoading = ref(false);
 const chatHistory = ref([]);
 const currentChatID = ref(null);
 const tokensUsage = ref(0);
-// const currentChat = ref({
-//   module: `${modelID}`,
-//   messages: [],
-// });
+const isSidebarOpen = ref(true);
+const viewWidth = ref(window.innerWidth);
 
+
+// 页面元素索引
 const chatBox = useTemplateRef("chatBox");
+const newChatBtnString = useTemplateRef("newChatBtnString");
+
+
+console.log(window.innerWidth);
+
+
+
+// 伸缩sidebar
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value;
+  if (!isSidebarOpen.value) {
+    newChatBtnString.value.textContent = '';
+
+  } else {
+    newChatBtnString.value.textContent = '添加新会话';
+  }
+
+  // If closing sidebar, fade out elements first
+  if (!isSidebarOpen.value) {
+    // Elements fade out first
+    document.querySelectorAll('.chat-card, .hamburger').forEach(el => {
+      el.style.opacity = '0';
+    });
+
+    // Then after transition, apply hidden classes
+    setTimeout(() => {
+      document.querySelectorAll('.chat-card, .hamburger').forEach(el => {
+        if (el.classList.contains('chat-card')) {
+          el.classList.add('chat-card-hidden');
+        } else {
+          el.classList.add('hamburger-hidden');
+        }
+      });
+    }, 300); // Match this to your transition time
+  } else {
+    // If opening sidebar, first remove hidden classes
+    document.querySelectorAll('.chat-card-hidden, .hamburger-hidden').forEach(el => {
+      if (el.classList.contains('chat-card-hidden')) {
+        el.classList.remove('chat-card-hidden');
+      } else {
+        el.classList.remove('hamburger-hidden');
+      }
+    });
+
+    // Then fade in with a small delay to allow the sidebar to expand first
+    setTimeout(() => {
+      document.querySelectorAll('.chat-card, .hamburger').forEach(el => {
+        el.style.opacity = '1';
+      });
+    }, 100);
+  }
+}
+
 
 // 系统提示词
 const SYSTEM_PROMPT =
@@ -151,6 +216,8 @@ onMounted(() => {
   if (!currentChatID.value) {
     currentChatID.value = chatHistory.value[0].id;
   }
+
+
 });
 
 // 保存聊天历史到本地存储
@@ -272,4 +339,32 @@ const sendMessage = async () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* 侧边栏动画 */
+#chatView .chat-sidebar {
+  max-width: 300px;
+  width: 25%;
+  transition: all 0.5s ease;
+}
+
+#chatView .sideBar-hidden {
+  max-width: 75px;
+  width: 75px;
+}
+
+.plusBtn {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-card,
+.hamburger {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.chat-card-hidden,
+.hamburger-hidden {
+  opacity: 0;
+}
+</style>

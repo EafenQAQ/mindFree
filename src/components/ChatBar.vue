@@ -18,7 +18,7 @@
           class="drawer-overlay"
         ></label>
         <ul
-          class="menu bg-base-200 text-base-content min-h-full w-80 p-4 sm:hidden"
+          class="menu bg-base-200 text-base-content min-h-full w-80 p-4 lg:hidden"
         >
           <!-- 创建新会话 -->
           <button

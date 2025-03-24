@@ -12,7 +12,7 @@
           'chat-sidebar',
           !isSidebarOpen ? 'sideBar-hidden' : 'overflow-y-auto',
         ]"
-        class="hidden sm:block max-w-[300px] w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl transition-transform duration-300 ease-in-out"
+        class="hidden lg:block max-w-[300px] w-1/4 h-4/5 bg-white/50 rounded-lg shadow-xl transition-transform duration-300 ease-in-out"
       >
         <!-- 添加新会话 -->
         <div
@@ -95,14 +95,14 @@
       </aside>
       <!-- 主体聊天框 -->
       <main
-        class="flex flex-col items-center p-5 justify-between chat-main w-3/4 h-4/5 bg-white/50 rounded-lg shadow-xl"
+        class="flex flex-col items-center p-5 justify-between chat-main sm:w-3/4 w-9/10 h-4/5 bg-white/50 rounded-lg shadow-xl"
       >
         <ChatBar
           class="self-start"
           :chatHistory="chatHistory"
           @addNewChat="
             (chatID) => {
-              deleteChat(chatID);
+              startNewChat(chatID);
             }
           "
           @deleteChat="deleteChat"

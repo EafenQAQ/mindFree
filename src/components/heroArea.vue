@@ -18,13 +18,15 @@
       </h1>
       <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
         <div class="rounded-full">
-          <a
-            href="#"
-            class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full bg-gradient-to-tr from-[#8bdaf0] to-[#3df3d2] hover:from-[#62a9bd] hover:to-[#3df3d2] hover:shadow-lg md:py-4 md:text-lg md:px-10"
-            @click="login"
-          >
-            开始使用 >
-          </a>
+          <router-link :to="{ name: 'chatView' }">
+            <a
+              href="#"
+              class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full bg-gradient-to-tr from-[#8bdaf0] to-[#3df3d2] hover:from-[#62a9bd] hover:to-[#3df3d2] hover:shadow-lg md:py-4 md:text-lg md:px-10"
+              @click="login"
+            >
+              开始使用 >
+            </a>
+          </router-link>
         </div>
       </div>
       <div class="mt-6 sm:mt-8 flex justify-center lg:justify-start space-x-4">
@@ -44,12 +46,6 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-const login = () => {
-  router.push("/chatView");
-};
 </script>
 
 <style scoped>

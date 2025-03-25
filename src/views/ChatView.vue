@@ -206,10 +206,10 @@
 
 <script setup>
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-import callARK from "../utils/axios";
 import { modelID } from "../api/ARK_API";
 import { uid } from "uid";
 import ChatBar from "../components/ChatBar.vue";
+import callARK from "../utils/axios";
 
 // 状态管理
 const userInput = ref("");

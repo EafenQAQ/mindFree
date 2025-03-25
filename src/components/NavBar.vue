@@ -22,11 +22,20 @@
           >
             for test
           </button> -->
+          <router-link :to="{ name: 'login' }">
+            <button
+              v-if="!userStore.isLoggedIn"
+              class="relative inline-flex items-center justify-center w-20 transition-all duration-300 ease-in-out bg-gradient-to-tr from-[#8bdaf0] to-blue-500 hover:from-[#62a9bd] hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg"
+            >
+              登录
+            </button>
+          </router-link>
           <button
-            @click="login"
-            class="relative inline-flex items-center justify-center w-20 transition-all duration-300 ease-in-out bg-gradient-to-tr from-[#8bdaf0] to-blue-500 hover:from-[#62a9bd] hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg"
+            v-if="userStore.isLoggedIn"
+            @click="logout"
+            class="btn btn-dash btn-primary rounded-full"
           >
-            登录
+            登出
           </button>
         </div>
       </div>
@@ -36,12 +45,14 @@
 
 <script setup>
 import { RouterLink, useRouter } from "vue-router";
-import { useUserInfoStore } from "../Stores/UserInfoStore";
-
+import { useUserInfoStore } from "../Stores/UserInfo";
 const userStore = useUserInfoStore();
 const router = useRouter();
 
-const login = () => {
-  router.push("/chatView");
+const logout = () => {
+  userStore.logOut();
+  setTimeout(() => {
+    router.push({ name: "home" });
+  }, 1000);
 };
 </script>

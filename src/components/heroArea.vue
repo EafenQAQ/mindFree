@@ -21,7 +21,7 @@
           <router-link :to="{ name: 'chatView' }">
             <a
               href="#"
-              class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full bg-gradient-to-tr from-[#8bdaf0] to-[#3df3d2] hover:from-[#62a9bd] hover:to-[#3df3d2] hover:shadow-lg md:py-4 md:text-lg md:px-10"
+              class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full bg-gradient-to-tr from-[#8bdaf0] to-[#3df3d2] hover:from-[#96dff3] hover:to-[#63fee1] hover:shadow-md md:py-4 md:text-lg md:px-10"
               @click="login"
             >
               开始使用 >

@@ -6,7 +6,7 @@
       <div class="flex items-center justify-between h-16">
         <RouterLink
           :to="{ name: 'home' }"
-          class="flex bg-white py-2 rounded-full items-center router-link-active router-link-exact-active btn btn-ghost p-0 m-0 h-fit w-fit hover:bg-gray-200"
+          class="flex hover:bg-white/30 py-2 rounded-full items-center router-link-active router-link-exact-active btn btn-ghost p-0 m-0 h-fit w-fit"
         >
           <img
             src="../assets/logo.webp"
@@ -33,7 +33,7 @@
           <button
             v-if="userStore.isLoggedIn"
             @click="logout"
-            class="btn btn-dash btn-primary rounded-full"
+            class="btn btn-dash hover:bg-red-500 hover:text-white rounded-full"
           >
             登出
           </button>

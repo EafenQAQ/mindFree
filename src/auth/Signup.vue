@@ -1,7 +1,7 @@
 <template>
   <div id="signup" class="flex justify-center items-center h-[80vh]">
     <form
-      class="w-1/2 max-w-md shadow-2xl flex flex-col justify-center items-center p-4 gap-2 shadow-bottom rounded-md"
+      class="w-1/2 max-w-md min-w-[400px] shadow-2xl flex flex-col justify-center items-center p-4 gap-2 shadow-bottom rounded-md"
       action="#"
       @submit.prevent="handleSubmit"
     >

@@ -256,6 +256,7 @@ import callARK from "../utils/axios";
 // 载入媒体资源
 import userAvatar from "../assets/avatars/head_5.jpg";
 import assistantAvatar from "../assets/logo.webp";
+import usePopSound from "../assets/audios/popSound_1.wav";
 
 // 状态管理
 const userInput = ref("");
@@ -268,6 +269,8 @@ const isSidebarOpen = ref(true);
 // 使用媒体资源
 const userAvatarImg = ref(new URL(userAvatar, import.meta.url).href);
 const assistantAvatarImg = ref(new URL(assistantAvatar, import.meta.url).href);
+
+const popSound = new Audio(usePopSound);
 
 // 页面元素索引
 const chatBox = useTemplateRef("chatBox");
@@ -466,6 +469,9 @@ const sendMessage = async () => {
       role: "assistant",
       content: res.data.choices[0].message.content,
     });
+
+    // 每次AI回复后播放音效
+    popSound.play();
 
     // 显示tokens用量
     tokensUsage.value = res.data.usage.total_tokens;

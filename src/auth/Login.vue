@@ -49,7 +49,7 @@
     </div>
 
     <form
-      class="w-1/2 max-w-md flex flex-col justify-center items-center p-4 gap-2 shadow-bottom shadow-xl rounded-md bg-white/50 backdrop-blur-lg"
+      class="w-1/2 max-w-md min-w-[400px] flex flex-col justify-center items-center p-4 gap-2 shadow-bottom shadow-xl rounded-md bg-white/50 backdrop-blur-lg"
       action="#"
       @submit.prevent="handleSubmit"
     >

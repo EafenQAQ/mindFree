@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.bg-gradient-Sky {
+  background: linear-gradient(to right, #758dcf, #ccd8fa);
+}

@@ -25,7 +25,7 @@
           <router-link :to="{ name: 'login' }">
             <button
               v-if="!userStore.isLoggedIn"
-              class="relative inline-flex items-center justify-center w-20 transition-all duration-300 ease-in-out bg-gradient-to-tr from-[#8bdaf0] to-blue-500 hover:from-[#62a9bd] hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg"
+              class="relative hover:cursor-pointer inline-flex items-center justify-center w-20 transition-all duration-300 ease-in-out bg-gradient-to-tr from-[#8bdaf0] to-blue-500 hover:from-[#62a9bd] hover:to-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:shadow-lg"
             >
               登录
             </button>

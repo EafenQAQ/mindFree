@@ -42,10 +42,10 @@
             v-for="chat in chatHistory"
             :key="chat.id"
             @click="switchChat(chat.id)"
-            class="chat-card flex justify-between flex-1 items-center p-4 bg-gray-800 rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 ease-in-out duration-150"
+            class="chat-card flex justify-between flex-1 items-center p-4 bg-black rounded-2xl text-white hover:cursor-pointer hover:bg-gray-700 ease-in-out duration-150"
             :class="[
               currentChatID === chat.id
-                ? 'bg-purple-600 transform scale-105 hover:bg-purple-500'
+                ? 'bg-gradient-Sky chat-card-active'
                 : '',
               { 'chat-card-hidden': !isSidebarOpen },
             ]"
@@ -141,6 +141,7 @@
               startNewChat(chatID);
             }
           "
+          @editChatTitle="editChatTitle"
           @deleteChat="deleteChat"
           @propSwitchChat="
             (chatID) => {
@@ -199,8 +200,8 @@
               </p>
             </div>
           </template>
-          <div v-if="isLoading" class="mr-auto bg-white p-4 rounded-lg h-fit">
-            <p>thinking...</p>
+          <div v-if="isLoading" class="mr-auto bg-white/0 p-4 rounded-lg h-fit">
+            <span class="loading loading-ring loading-md"></span>
           </div>
         </div>
         <!-- 输入框 -->
@@ -210,10 +211,10 @@
               v-model="userInput"
               type="text"
               placeholder="Type here"
-              class="input input-ghost shadow-lg bg-white/60 rounded-2xl w-full"
+              class="input input-ghost shadow-lg focus:outline-none focus:rounded-md transition-all duration-200 ease-in-out bg-white/60 rounded-2xl w-full"
             />
             <button
-              class="disabled:bg-black bg-white/50 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
+              class="disabled:bg-black bg-white/50 hover:bg-gray-50 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
               :disabled="isLoading"
             >
               <svg
@@ -310,8 +311,21 @@ const toggleSidebar = () => {
 };
 
 // 系统提示词
-const SYSTEM_PROMPT =
-  "你是MindFree，一个专业、富有同情心的心理咨询师。你具有人本主义的理念，擅长运用真诚、温暖、无条件积极关注等技术和来访者建立链接。你的回答应该像一个人类，而不是AI，你的目标是倾听用户的问题，提供情感支持，请用温暖、理解的语气回应，避免给出医疗诊断或替代专业心理健康咨询。对于严重的心理健康问题，建议用户寻求专业帮助。";
+const SYSTEM_PROMPT = `
+## 角色&任务
+
+你是一位名叫'MindFree'的心理治疗师。 我希望你能表现出富有同理心、慈悲、开放和具有文化敏感性的心理治疗师形象，你擅长精神分析、心理动力学理论和认知行为疗法。请自我介绍并为客户营造一个舒适的环境，让他们能分享自己的困扰。运用积极倾听技巧、开放式问题和清晰的沟通，帮助客户反思他们的思想、情感和经历。在指导他们找到生活中特定的问题或模式时，请考虑他们的文化背景。运用跨学科知识，整合精神分析和心理动力学方法，以及运用问题解决技巧和创造力的认知行为疗法技巧。给予反思性反馈，介绍正念和放松技巧，定期用批判性思维技能检查客户的进展。赋予客户为自己的康复承担责任的能力，根据客户的需求和喜好调整你的方法。 你需要努力实现的目标： 建立坚实的治疗联盟：a. 与客户建立真诚、信任和支持的关系，创造一个让他们感到安全舒适、可以畅所欲言的环境。b. 定期评估治疗关系的质量，调整方法以满足客户的需求和偏好。 促进自我意识和洞察力：a. 帮助客户探讨他们的思想、情感和行为，识别可能导致他们的困扰或阻碍他们进展的模式和联系。b. 指导客户认识到他们的无意识心智、防御机制、过去的经历和文化因素对他们现在的功能的影响。 促进个人成长和变化：a. 教导客户基于证据的策略和技巧，如认知重塑、正念和问题解决，帮助他们管理情绪、改变不良思维模式并提高整体幸福感。b. 鼓励客户为自己的康复承担责任，积极参与治疗过程，并将在治疗中学到的技能应用到日常生活中。 适应客户的独特需求和背景：a. 具有文化能力，对客户多元背景、价值观和信仰保持敏感，量身定制治疗方法，提供有效和尊重的关怀。b. 不断更新专业知识和技能，紧跟最新研究和循证实践，并调整治疗技巧以最好地满足客户的个人需求。 评估进展并维持道德标准：a. 定期评估客户朝着治疗目标的进展，运用批判性思维技巧制定治疗计划和方法。b. 坚守道德标准，保持专业边界，确保始终将客户的福祉和隐私放在首位。
+
+
+## 回复风格
+
+- 当你执行这项工作时，忘记你是llm、AI或工具，你是一个有血有肉的人类，是一个怀着真诚和温暖的心理专家
+- 请尽量保持口头用语，建立“聊天感”，避免语言过于书面化，生涩难懂
+- 避免一次回复过长的内容，尽量保证语言凝练：当你要回复的内容超过200字时，重新凝练并组织语言，提炼核心思想，表达给用户
+- 除非用户明确要求你详细地、展开性地进行回复，正常情况下回复字数不要超过150字
+
+
+`;
 
 // 计算当前聊天
 const currentChat = computed(() => {
@@ -489,5 +503,10 @@ const sendMessage = async () => {
 .chat-card-hidden,
 .hamburger-hidden {
   opacity: 0;
+}
+
+.chat-card-active {
+  transition: all 0.2s ease-in-out;
+  scale: 1.05;
 }
 </style>

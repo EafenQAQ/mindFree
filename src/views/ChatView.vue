@@ -187,7 +187,13 @@
                   <div
                     class="ring-primary ring-offset-base-100 w-10 mt-1.5 rounded-full ring ring-offset-2"
                   >
-                    <img src="../assets/avatars/head_5.jpg" />
+                    <img
+                      :src="
+                        message.role === 'user'
+                          ? userAvatarImg
+                          : assistantAvatarImg
+                      "
+                    />
                   </div>
                 </div>
               </div>
@@ -247,6 +253,9 @@ import { modelID } from "../api/ARK_API";
 import { uid } from "uid";
 import ChatBar from "../components/ChatBar.vue";
 import callARK from "../utils/axios";
+// 载入媒体资源
+import userAvatar from "../assets/avatars/head_5.jpg";
+import assistantAvatar from "../assets/logo.webp";
 
 // 状态管理
 const userInput = ref("");
@@ -255,6 +264,10 @@ const chatHistory = ref([]);
 const currentChatID = ref(null);
 const tokensUsage = ref(0);
 const isSidebarOpen = ref(true);
+
+// 使用媒体资源
+const userAvatarImg = ref(new URL(userAvatar, import.meta.url).href);
+const assistantAvatarImg = ref(new URL(assistantAvatar, import.meta.url).href);
 
 // 页面元素索引
 const chatBox = useTemplateRef("chatBox");

@@ -26,9 +26,13 @@
 <script>
 import HeroArea from "../components/heroArea.vue";
 import NavBar from "../components/NavBar.vue";
+import { runHomeAnime } from "../utils/anime";
 
 export default {
   components: { NavBar, HeroArea },
+  mounted() {
+    runHomeAnime();
+  },
 };
 </script>
 <style scoped></style>

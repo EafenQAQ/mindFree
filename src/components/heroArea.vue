@@ -61,24 +61,26 @@
 <script setup>
 import { useRouter } from "vue-router";
 import anime from "animejs";
-
 </script>
 
 <style scoped>
+/* 打字机动画效果 */
 .textTyper {
   font-size: 3rem;
   /* 初始宽度为0 */
   width: 0;
   height: 4rem;
-  border-right: 5px solid rgb(100, 146, 231);
+  /* 初始隐藏光标 */
+  border-right: 5px solid transparent;
   /*
     Steps(<number_of_steps>，<direction>)
     steps接收两个参数：第一个参数指定动画分割的段数；第二个参数可选，接受 start和 end两个值，指定在每个间隔的起点或是终点发生阶跃变化，默认为 end。
     */
   animation:
-    write 3s steps(5) forwards,
+    showCursor 0.01s 2.5s forwards,
+    write 3s steps(5) 2.5s forwards,
     blink 0.75s steps(1) infinite,
-    hideCursor 0.01s 3s forwards;
+    hideCursor 0.01s 7s forwards;
   overflow: hidden;
 }
 
@@ -102,6 +104,11 @@ import anime from "animejs";
 @keyframes hideCursor {
   to {
     border-right-color: transparent;
+  }
+}
+@keyframes showCursor {
+  to {
+    border-right-color: rgb(100, 146, 231);
   }
 }
 </style>

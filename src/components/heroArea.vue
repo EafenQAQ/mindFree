@@ -1,9 +1,9 @@
 <template>
   <div
-    class="heroContainer flex items-center justify-center mx-auto max-w-6xl max-lg:flex-col-reverse max-lg:mt-25"
+    class="heroContainer max-3xl:max-w-lg flex items-center justify-center mx-auto max-w-6xl max-3xl:flex-col-reverse max-3xl:mt-25"
   >
     <!-- hero左侧文字区 -->
-    <div class="text-center sm:text-center lg:text-left">
+    <div class="text-center 3xl:text-left">
       <p
         class="text-anime-1 mt-3 mb-5 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
       >
@@ -18,14 +18,14 @@
         <!--   -->
       </h1>
       <div
-        class="textTyper max-lg:mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
+        class="textTyper max-3xl:mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
       >
         24小时在线
       </div>
       <div
         class="center mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start"
       >
-        <div class="rounded-full max-w-75 max-lg:mx-auto">
+        <div class="rounded-full max-w-75 max-3xl:mx-auto">
           <router-link :to="{ name: 'chatView' }">
             <a
               href="#"
@@ -37,7 +37,7 @@
           </router-link>
         </div>
       </div>
-      <div class="mt-6 sm:mt-8 flex justify-center lg:justify-start space-x-4">
+      <div class="mt-6 sm:mt-8 flex max-3xl:justify-center justify-start space-x-4">
         <p class="text-sm text-gray-500 font-medium">24全天支持</p>
         <p class="text-sm text-gray-500 font-medium">打开即用</p>
         <p class="text-sm text-gray-500 font-medium">免费</p>
@@ -47,10 +47,10 @@
 
     <div
       @click="runAnime"
-      class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-lg:m-10 max-lg:w-80"
+      class="heroImg w-full max-w-[512px] object-cover sm:h-72 max-3xl:m-10 max-3xl:w-80"
     >
       <img
-        class="rounded-2xl max-lg:rounded-full"
+        class="rounded-2xl max-3xl:rounded-full"
         src="../assets/hero_img.webp"
         alt="heroImg"
       />

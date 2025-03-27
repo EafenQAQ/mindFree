@@ -4,3 +4,7 @@
 .bg-gradient-Sky {
   background: linear-gradient(to right, #758dcf, #ccd8fa);
 }
+
+@theme {
+  --breakpoint-3xl: 80rem;
+}

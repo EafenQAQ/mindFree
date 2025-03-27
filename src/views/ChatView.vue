@@ -131,7 +131,7 @@
       </aside>
       <!-- 主体聊天框 -->
       <main
-        class="flex flex-col items-center p-5 justify-between chat-main sm:w-3/4 w-[100%] h-4/5 bg-white/50 rounded-lg shadow-xl"
+        class="flex flex-col items-center p-5 justify-between chat-main sm:max-w-5xl w-[100%] h-4/5 bg-white/50 rounded-lg shadow-xl"
       >
         <ChatBar
           class="self-start"

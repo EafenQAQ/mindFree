@@ -3,28 +3,30 @@
     <!-- alert窗口 -->
     <div id="loginAlert">
       <!-- 登录成功提示 -->
-      <div class="alert-container flex w-full h-[4rem]">
-        <div
-          v-show="loginSuccess"
-          role="alert"
-          class="alert alert-success mb-4 ease-in duration-200"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
+      <Transition name="loginAlert">
+        <div class="alert-container flex w-full h-[4rem]">
+          <div
+            v-show="loginSuccess"
+            role="alert"
+            class="alert alert-success mb-4 ease-in duration-200"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>登录成功！</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>登录成功！</span>
+          </div>
         </div>
-      </div>
+      </Transition>
       <!-- 登录失败提示 -->
       <div
         v-show="loginFail"
@@ -49,7 +51,7 @@
     </div>
 
     <form
-      class="w-1/2 max-w-md min-w-[400px] flex flex-col justify-center items-center p-4 gap-2 shadow-bottom shadow-xl rounded-md bg-white/50 backdrop-blur-lg"
+      class="w-1/2 max-w-md min-w-[350px] flex flex-col justify-center items-center p-4 gap-2 shadow-bottom shadow-xl rounded-md bg-white/50 backdrop-blur-lg"
       action="#"
       @submit.prevent="handleSubmit"
     >
@@ -199,3 +201,14 @@ const forTest = async () => {
   console.log(LocalUser);
 };
 </script>
+<style scoped>
+.loginAlert-enter-active,
+.loginAlert-leave-active {
+  transition: opacity 3s ease;
+}
+
+.loginAlert-enter-from,
+.loginAlert-leave-to {
+  opacity: 0;
+}
+</style>

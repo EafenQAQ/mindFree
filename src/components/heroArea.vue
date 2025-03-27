@@ -1,7 +1,9 @@
 <template>
-  <div class="heroContainer flex items-center mx-auto max-w-6xl">
+  <div
+    class="heroContainer flex items-center justify-center mx-auto max-w-6xl max-sm:flex-col-reverse max-sm:mt-25"
+  >
     <!-- hero左侧文字区 -->
-    <div class="sm:text-center lg:text-left">
+    <div class="text-center sm:text-center lg:text-left">
       <p
         class="mt-3 mb-5 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
       >
@@ -16,8 +18,10 @@
           >24小时在线</span
         >
       </h1>
-      <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-        <div class="rounded-full">
+      <div
+        class="center mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start"
+      >
+        <div class="rounded-full max-w-75 max-sm:mx-auto">
           <router-link :to="{ name: 'chatView' }">
             <a
               href="#"
@@ -37,9 +41,13 @@
     </div>
     <!-- hero图 -->
     <div
-      class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
+      class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-sm:m-10 max-sm:w-80"
     >
-      <img class="rounded-2xl" src="../assets/hero_img.webp" alt="heroImg" />
+      <img
+        class="rounded-2xl max-sm:rounded-full"
+        src="../assets/hero_img.webp"
+        alt="heroImg"
+      />
     </div>
   </div>
 </template>

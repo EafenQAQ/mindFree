@@ -5,19 +5,23 @@
     <!-- hero左侧文字区 -->
     <div class="text-center sm:text-center lg:text-left">
       <p
-        class="mt-3 mb-5 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
+        class="text-anime-1 mt-3 mb-5 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
       >
         你的专属心理健康智能管家🧠
       </p>
       <h1
         class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-5xl"
       >
-        <span class="block xl:inline">为你提供专业、稳定的情感支持, </span>
-        <span
-          class="text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
-          >24小时在线</span
-        >
+        <span class="text-anime-2 block xl:inline"
+          >为你提供专业、稳定的情感支持,
+        </span>
+        <!--   -->
       </h1>
+      <div
+        class="textTyper max-sm:mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
+      >
+        24小时在线
+      </div>
       <div
         class="center mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start"
       >
@@ -42,6 +46,7 @@
     <!-- hero图 -->
 
     <div
+      @click="runAnime"
       class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-sm:m-10 max-sm:w-80"
     >
       <img
@@ -55,17 +60,48 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import anime from "animejs";
+
 </script>
 
 <style scoped>
-.heroImg-enter-active,
-.heroImg-leave-active {
-  transition: all 0.5s ease;
+.textTyper {
+  font-size: 3rem;
+  /* 初始宽度为0 */
+  width: 0;
+  height: 4rem;
+  border-right: 5px solid rgb(100, 146, 231);
+  /*
+    Steps(<number_of_steps>，<direction>)
+    steps接收两个参数：第一个参数指定动画分割的段数；第二个参数可选，接受 start和 end两个值，指定在每个间隔的起点或是终点发生阶跃变化，默认为 end。
+    */
+  animation:
+    write 3s steps(5) forwards,
+    blink 0.75s steps(1) infinite,
+    hideCursor 0.01s 3s forwards;
+  overflow: hidden;
 }
 
-.heroImg-enter-from,
-.heroImg-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
+@keyframes write {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 280px;
+  }
+}
+
+@keyframes blink {
+  50% {
+    /* transparent是全透明黑色(black)的速记法，即一个类似rgba(0,0,0,0)这样的值。 */
+    border-color: transparent; /* #00000000 */
+  }
+}
+
+@keyframes hideCursor {
+  to {
+    border-right-color: transparent;
+  }
 }
 </style>

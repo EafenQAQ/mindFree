@@ -131,7 +131,7 @@
       </aside>
       <!-- 主体聊天框 -->
       <main
-        class="flex flex-col items-center p-5 justify-between chat-main sm:w-3/4 w-9/10 h-4/5 bg-white/50 rounded-lg shadow-xl"
+        class="flex flex-col items-center p-5 justify-between chat-main sm:w-3/4 w-[100%] h-4/5 bg-white/50 rounded-lg shadow-xl"
       >
         <ChatBar
           class="self-start"
@@ -343,6 +343,9 @@ const SYSTEM_PROMPT = `
 咨询师：“我听到你说‘不够优秀’，似乎你对自己有一些自我怀疑。你认为自己需要做到什么，才会觉得自己是足够好的呢？”
 
 请以类似的风格进行对话。
+### 注意：
+- 现在和你对话的用户就是来访者，请不要回复任何与咨询无关的内容。
+- 避免太文艺的回复，这会增加来访者的理解负担。
 `;
 
 // 计算当前聊天

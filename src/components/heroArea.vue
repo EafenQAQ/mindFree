@@ -40,6 +40,7 @@
       </div>
     </div>
     <!-- hero图 -->
+
     <div
       class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-sm:m-10 max-sm:w-80"
     >
@@ -57,5 +58,14 @@ import { useRouter } from "vue-router";
 </script>
 
 <style scoped>
-/* 可以添加一些额外的 scoped 样式，如果需要的话 */
+.heroImg-enter-active,
+.heroImg-leave-active {
+  transition: all 0.5s ease;
+}
+
+.heroImg-enter-from,
+.heroImg-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
 </style>

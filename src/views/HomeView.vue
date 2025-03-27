@@ -31,3 +31,4 @@ export default {
   components: { NavBar, HeroArea },
 };
 </script>
+<style scoped></style>

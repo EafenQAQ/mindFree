@@ -4,47 +4,22 @@
     <div id="loginAlert">
       <!-- 登录成功提示 -->
       <Transition name="loginAlert">
-        <div class="alert-container flex w-full h-[4rem]">
-          <div
-            v-show="loginSuccess"
-            role="alert"
-            class="alert alert-success mb-4 ease-in duration-200"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 shrink-0 stroke-current"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
+        <div v-if="loginSuccess" class="alert-container flex w-full h-[4rem]">
+          <div role="alert" class="alert alert-success mb-4 ease-in duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>登录成功！</span>
           </div>
         </div>
       </Transition>
       <!-- 登录失败提示 -->
-      <div
-        v-show="loginFail"
-        role="alert"
-        class="alert alert-error mb-4 ease-in duration-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 shrink-0 stroke-current"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
+      <div v-show="loginFail" role="alert" class="alert alert-error mb-4 ease-in duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span>邮箱或密码错误</span>
       </div>
@@ -52,67 +27,34 @@
 
     <form
       class="w-1/2 max-w-md min-w-[350px] flex flex-col justify-center items-center p-4 gap-2 shadow-bottom shadow-xl rounded-md bg-white/50 backdrop-blur-lg"
-      action="#"
-      @submit.prevent="handleSubmit"
-    >
+      action="#" @submit.prevent="handleSubmit">
       <div class="my-2 text-3xl font-semibold">
         <h1>登录</h1>
       </div>
       <!-- 邮箱 -->
       <label class="input validator">
-        <svg
-          class="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
-          >
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
             <rect width="20" height="16" x="2" y="4" rx="2"></rect>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
           </g>
         </svg>
-        <input
-          v-model="email"
-          type="email"
-          placeholder="mail@site.com"
-          required
-        />
+        <input v-model="email" type="email" placeholder="mail@site.com" required />
       </label>
       <div class="validator-hint hidden">请输入邮箱</div>
       <!-- 密码 -->
       <label class="input validator">
-        <svg
-          class="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
-          >
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
             <path
-              d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
-            ></path>
+              d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z">
+            </path>
             <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
           </g>
         </svg>
-        <input
-          v-model="passwd"
-          type="password"
-          required
-          placeholder="密码"
-          minlength="8"
+        <input v-model="passwd" type="password" required placeholder="密码" minlength="8"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-        />
+          title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
       </label>
       <p class="validator-hint hidden">
         Must be more than 8 characters, including
@@ -123,9 +65,7 @@
       <!-- <input type="text" required placeholder="请输入验证码" class="input" /> -->
 
       <!-- 记住密码 -->
-      <fieldset
-        class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64"
-      >
+      <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64">
         <legend class="fieldset-legend">Login options</legend>
         <label class="fieldset-label">
           <input type="checkbox" class="checkbox checkbox-accent" />
@@ -146,12 +86,8 @@
         <RouterLink :to="{ name: 'signup' }">
           <span class="text-accent hover:text-green-500">注册</span>
         </RouterLink>
-        <button
-          :hidden="true"
-          type="button"
-          @click="forTest"
-          class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-        >
+        <button :hidden="true" type="button" @click="forTest"
+          class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">
           test
         </button>
       </div>
@@ -204,11 +140,12 @@ const forTest = async () => {
 <style scoped>
 .loginAlert-enter-active,
 .loginAlert-leave-active {
-  transition: opacity 3s ease;
+  transition: all 0.5s ease;
 }
 
 .loginAlert-enter-from,
 .loginAlert-leave-to {
   opacity: 0;
+  transform: translateY(-30px);
 }
 </style>

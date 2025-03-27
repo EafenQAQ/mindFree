@@ -12,4 +12,3 @@ import { useUserInfoStore } from "./Stores/UserInfo";
 const userStore = useUserInfoStore();
 userStore.loadUserInfo();
 </script>
-<style></style>

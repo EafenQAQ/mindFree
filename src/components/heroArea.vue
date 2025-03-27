@@ -1,6 +1,6 @@
 <template>
   <div
-    class="heroContainer flex items-center justify-center mx-auto max-w-6xl max-sm:flex-col-reverse max-sm:mt-25"
+    class="heroContainer flex items-center justify-center mx-auto max-w-6xl max-lg:flex-col-reverse max-lg:mt-25"
   >
     <!-- hero左侧文字区 -->
     <div class="text-center sm:text-center lg:text-left">
@@ -18,14 +18,14 @@
         <!--   -->
       </h1>
       <div
-        class="textTyper max-sm:mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
+        class="textTyper max-lg:mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
       >
         24小时在线
       </div>
       <div
         class="center mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start"
       >
-        <div class="rounded-full max-w-75 max-sm:mx-auto">
+        <div class="rounded-full max-w-75 max-lg:mx-auto">
           <router-link :to="{ name: 'chatView' }">
             <a
               href="#"
@@ -47,10 +47,10 @@
 
     <div
       @click="runAnime"
-      class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-sm:m-10 max-sm:w-80"
+      class="heroImg w-full max-w-[512px] object-cover sm:h-72 md:h-96 lg:w-full lg:h-full max-lg:m-10 max-lg:w-80"
     >
       <img
-        class="rounded-2xl max-sm:rounded-full"
+        class="rounded-2xl max-lg:rounded-full"
         src="../assets/hero_img.webp"
         alt="heroImg"
       />

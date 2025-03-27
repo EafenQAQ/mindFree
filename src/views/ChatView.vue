@@ -164,40 +164,42 @@
             <p>你可以向我倾诉任何烦恼，我会尽力帮助你</p>
           </div>
           <template v-else>
-            <div
-              v-for="(message, msgIndex) in currentChat?.messages"
-              :key="msgIndex"
-              :hidden="message.role === 'system'"
-            >
+            <TransitionGroup name="chat" tag="div">
               <div
-                class="flex items-start gap-2"
-                :class="[message.role === 'user' ? '' : 'flex-row-reverse']"
+                v-for="(message, msgIndex) in currentChat?.messages"
+                :key="msgIndex"
+                :hidden="message.role === 'system'"
               >
-                <p
-                  :class="[
-                    'mb-4 p-4 max-w-[80%] rounded-lg h-fit',
-                    message.role === 'user'
-                      ? 'ml-auto bg-blue-500/60 text-white'
-                      : 'mr-auto bg-purple-800 text-white',
-                  ]"
+                <div
+                  class="flex items-start gap-2"
+                  :class="[message.role === 'user' ? '' : 'flex-row-reverse']"
                 >
-                  {{ message.content }}
-                </p>
-                <div class="avatar">
-                  <div
-                    class="ring-primary ring-offset-base-100 w-10 mt-1.5 rounded-full ring ring-offset-2"
+                  <p
+                    :class="[
+                      'mb-4 p-4 max-w-[80%] rounded-lg h-fit',
+                      message.role === 'user'
+                        ? 'ml-auto bg-blue-500/60 text-white'
+                        : 'mr-auto bg-purple-800 text-white',
+                    ]"
                   >
-                    <img
-                      :src="
-                        message.role === 'user'
-                          ? userAvatarImg
-                          : assistantAvatarImg
-                      "
-                    />
+                    {{ message.content }}
+                  </p>
+                  <div class="avatar">
+                    <div
+                      class="ring-primary ring-offset-base-100 w-10 mt-1.5 rounded-full ring ring-offset-2"
+                    >
+                      <img
+                        :src="
+                          message.role === 'user'
+                            ? userAvatarImg
+                            : assistantAvatarImg
+                        "
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </TransitionGroup>
             <!-- tokens用量 -->
             <div class="flex items-center justify-center">
               <p class="text-sm text-gray-500">
@@ -532,5 +534,17 @@ const sendMessage = async () => {
 .chat-card-active {
   transition: all 0.2s ease-in-out;
   scale: 1.05;
+}
+
+/* 聊天气泡动画 */
+.chat-enter-active,
+.chat-leave-active {
+  transition: all 0.2s ease;
+}
+
+.chat-enter-from,
+.chat-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
 }
 </style>

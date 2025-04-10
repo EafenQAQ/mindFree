@@ -1,6 +1,6 @@
 <template>
   <div
-    class="heroContainer gap-10 max-md:w-sm max-3xl:mt-30 max-md:mt-30 max-md:justify-center max-md:items-center max-md:flex-col-reverse h-[100vh] max-3xl:w-2xl max-3xl:text-md max-max-w-lg flex items-center justify-center mx-auto max-w-6xl max-flex-col-reverse max-mt-25"
+    class="heroContainer gap-10 max-md:w-sm max-3xl:mt-30 max-md:mt-40 max-md:justify-center max-md:items-center max-md:flex-col-reverse h-[100vh] max-3xl:w-2xl max-3xl:text-md max-max-w-lg flex items-center justify-center mx-auto max-w-6xl max-flex-col-reverse max-mt-25"
   >
     <!-- hero左侧文字区 -->
     <div class="max-3xl:text-start 3xl:text-left max-md:text-center">

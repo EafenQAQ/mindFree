@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [vue(), tailwindcss(), VitePluginVueDevTools()],
   base: "/",
   build: {
-    outDir: "dist/mindFree",
+    outDir: "dist",
   },
-  
 });

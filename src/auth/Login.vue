@@ -1,7 +1,7 @@
 <template>
-  <div id="signup" class="flex flex-col justify-center items-center h-[80vh]">
+  <div id="signup" class="flex flex-col justify-center items-center h-[80vh] relative">
     <!-- alert窗口 -->
-    <div id="loginAlert">
+    <div id="loginAlert" class="absolute top-0">
       <!-- 登录成功提示 -->
       <Transition name="loginAlert">
         <div v-if="loginSuccess" class="alert-container flex w-full h-[4rem]">
@@ -16,13 +16,16 @@
         </div>
       </Transition>
       <!-- 登录失败提示 -->
-      <div v-show="loginFail" role="alert" class="alert alert-error mb-4 ease-in duration-200">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span v-if="failedMes">{{ failedMes }}</span>
-      </div>
+      <Transition name="loginAlert">
+        <div v-show="loginFail" role="alert" class="alert alert-error mb-4 ease-in duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span v-if="failedMes">{{ failedMes }}</span>
+        </div>
+      </Transition>
     </div>
 
     <form
@@ -99,7 +102,7 @@
 import supabase from "../utils/supabase";
 import axios from "axios";
 import { uid } from "uid";
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { errorMessages } from "vue/compiler-sfc";
 import { useUserInfoStore } from "../Stores/UserInfo";
@@ -124,9 +127,15 @@ const handleSubmit = async () => {
     password: passwd.value,
   });
 
-
+  let timer = null;
   if (error) {
     loginFail.value = true;
+
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      loginFail.value = false;
+    }, 3000);
+
     if (error.message === "Invalid login credentials") {
       failedMes.value = "邮箱或密码错误"
     } else if (error.message === "Email not confirmed") {
@@ -146,10 +155,12 @@ const handleSubmit = async () => {
 
   isLoading.value = false
 };
-const forTest = async () => {
-  const LocalUser = await supabase.auth.getSession();
-  console.log(LocalUser);
-};
+
+// 清除定时器
+onUnmounted(() => {
+  clearTimeout(timer);
+});
+
 </script>
 <style scoped>
 .loginAlert-enter-active,

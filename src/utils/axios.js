@@ -10,4 +10,13 @@ const callARK = axios.create({
   },
 });
 
-export default callARK;
+const call_big_model = axios.create({
+  baseURL: "https://open.bigmodel.cn/api/paas/v4/",
+  timeout: 20000,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${API_KEY}`,
+  },
+});
+
+export { callARK, call_big_model };

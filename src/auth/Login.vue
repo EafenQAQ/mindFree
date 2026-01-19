@@ -70,7 +70,7 @@
       <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64">
         <legend class="fieldset-legend">Login options</legend>
         <label class="fieldset-label">
-          <input type="checkbox" class="checkbox checkbox-accent" />
+          <input v-model="ifRememberMe" type="checkbox" class="checkbox checkbox-accent" />
           <div class="flex items-center w-full justify-between">
             <label for="rememberPw" class="text-black text-sm">记住我</label>
             <button class="btn btn-link">忘记密码？</button>
@@ -107,16 +107,22 @@ import { useRouter } from "vue-router";
 import { errorMessages } from "vue/compiler-sfc";
 import { useUserInfoStore } from "../Stores/UserInfo";
 import Spinner from "../components/Spinner.vue";
+
 const router = useRouter();
 const userStore = useUserInfoStore();
 
+// 表单数据
 const email = ref("");
 const passwd = ref("");
+const ifRememberMe = ref(false);
 
+// 登录状态
 const loginSuccess = ref(false);
 const loginFail = ref(false);
 
+// 失败信息
 const failedMes = ref(null)
+// 加载状态
 const isLoading = ref(false)
 
 let timer = null;
@@ -150,9 +156,16 @@ const handleSubmit = async () => {
   } else {
     loginSuccess.value = !loginSuccess.value;
     userStore.isLoggedIn = true;
-    setTimeout(() => {
+    timer = setTimeout(() => {
       router.push({ name: "chatView" });
     }, 2000);
+
+    // 把密码存到localStorage
+    if (ifRememberMe.value) {
+      localStorage.setItem("email", email.value);
+      localStorage.setItem("passwd", passwd.value);
+    }
+
   }
 
   isLoading.value = false

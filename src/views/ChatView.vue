@@ -131,7 +131,7 @@
             <input v-model="userInput" type="text" placeholder="Type here"
               class="input input-ghost shadow-lg focus:outline-none focus:rounded-md transition-all duration-200 ease-in-out bg-white/60 rounded-2xl w-full" />
             <button
-              class="disabled:bg-black bg-white/50 hover:bg-gray-50 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
+              class="disabled:bg-black disabled:cursor-not-allowed bg-white/50 hover:bg-gray-50 text-white font-bold py-2 px-4 rounded-2xl shadow-2xl cursor-pointer"
               :disabled="isLoading">
               <svg t="1742632205333" class="icon" viewBox="0 0 1024 1024" version="1.1"
                 xmlns="http://www.w3.org/2000/svg" p-id="9539" width="25" height="25">
@@ -344,7 +344,7 @@ const sendMessage = async () => {
   };
 
   currentChat.value.messages.push(userMessage);
-  console.log(currentChat.value);
+
   userInput.value = "";
 
   // 根据聊天主题渲染标题（待开发。。。）
@@ -356,7 +356,7 @@ const sendMessage = async () => {
     const hasSystemPrompt = currentChat.value.messages.some((msg) => {
       return msg.role === "system";
     });
-    console.log(hasSystemPrompt);
+
 
     if (!hasSystemPrompt) {
       currentChat.value.messages.unshift({

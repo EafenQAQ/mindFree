@@ -1,40 +1,31 @@
 <template>
   <div
-    class="heroContainer gap-10 max-md:w-sm max-3xl:mt-30 max-md:mt-40 max-md:justify-center max-md:items-center max-md:flex-col-reverse h-[100vh] max-3xl:w-2xl max-3xl:text-md max-max-w-lg flex items-center justify-center mx-auto max-w-6xl max-flex-col-reverse max-mt-25"
-  >
+    class="heroContainer gap-10 max-md:w-sm max-3xl:mt-30 max-md:mt-40 max-md:justify-center max-md:items-center max-md:flex-col-reverse h-[100vh] max-3xl:w-2xl max-3xl:text-md max-max-w-lg flex items-center justify-center mx-auto max-w-6xl max-flex-col-reverse max-mt-25">
     <!-- hero左侧文字区 -->
     <div class="max-3xl:text-start 3xl:text-left max-md:text-center">
       <p class="text-anime-1 mt-3 mb-5 text-base text-gray-500 max-w-xl mx-0">
         你的专属心理健康智能管家🧠
       </p>
-      <h1
-        class="max-3xl:text-3xl text-5xl font-bold tracking-tight text-gray-900"
-      >
-        <span class="text-anime-2 block xl:inline"
-          >为你提供专业、稳定的情感支持,
+      <h1 class="max-3xl:text-3xl text-5xl font-bold tracking-tight text-gray-900">
+        <span class="text-anime-2 block xl:inline">为你提供专业、稳定的情感支持,
         </span>
       </h1>
       <div
-        class="textTyper max-md:mx-auto max-mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500"
-      >
+        class="textTyper max-md:mx-auto max-mx-auto font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#8bdaf0] to-blue-500">
         24小时在线
       </div>
       <div class="center mt-8 flex justify-start max-md:justify-center">
         <div class="rounded-full max-w-75 max-mx-auto">
           <router-link :to="{ name: 'chatView' }">
-            <a
-              href="#"
+            <a href="#"
               class="flex items-center justify-center border border-transparent font-medium rounded-full bg-gradient-to-tr from-[#8bdaf0] to-[#3df3d2] hover:from-[#96dff3] hover:to-[#63fee1] hover:shadow-md py-4 text-lg px-10"
-              @click="login"
-            >
+              @click="login">
               开始使用 >
             </a>
           </router-link>
         </div>
       </div>
-      <div
-        class="mt-8 flex max-justify-center justify-start max-md:justify-center space-x-4"
-      >
+      <div class="mt-8 flex max-justify-center justify-start max-md:justify-center space-x-4">
         <p class="text-sm text-gray-500 font-medium">24全天支持</p>
         <p class="text-sm text-gray-500 font-medium">打开即用</p>
         <p class="text-sm text-gray-500 font-medium">免费</p>
@@ -42,22 +33,16 @@
     </div>
     <!-- hero图 -->
 
-    <div
-      @click="runAnime"
-      class="heroImg mb-40 max-md:flex max-md:my-0 max-md:h-fit max-md:justify-center max-3xl:my-auto w-full max-w-[512px] object-cover h-72 max-m-10"
-    >
-      <img
-        class="rounded-2xl max-rounded-full max-md:max-w-[300px] max-md:rounded-full"
-        src="../assets/hero_img.webp"
-        alt="heroImg"
-      />
+    <div @click="runAnime"
+      class="heroImg mb-40 max-md:flex max-md:my-0 max-md:h-fit max-md:justify-center max-3xl:my-auto w-full max-w-[512px] object-cover h-72 max-m-10">
+      <img class="rounded-2xl max-rounded-full max-md:max-w-[300px] max-md:rounded-full" src="../assets/hero_img.webp"
+        alt="heroImg" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import anime from "animejs";
+
 </script>
 
 <style scoped>
@@ -94,7 +79,8 @@ import anime from "animejs";
 @keyframes blink {
   50% {
     /* transparent是全透明黑色(black)的速记法，即一个类似rgba(0,0,0,0)这样的值。 */
-    border-color: transparent; /* #00000000 */
+    border-color: transparent;
+    /* #00000000 */
   }
 }
 
@@ -103,6 +89,7 @@ import anime from "animejs";
     border-right-color: transparent;
   }
 }
+
 @keyframes showCursor {
   to {
     border-right-color: rgb(100, 146, 231);

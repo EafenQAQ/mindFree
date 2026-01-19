@@ -108,14 +108,13 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { uid } from "uid";
-import http from "../utils/axios";
+
+
+
 import supabase from "../utils/supabase";
 import Spinner from "../components/Spinner.vue";
 
-const router = useRouter();
+
 
 const user = ref("");
 const email = ref("");
@@ -141,20 +140,20 @@ const confirmPassword = () => {
 };
 
 // 发送验证码
-const handleVerifyEmail = async () => {
-  isLoading.value = true;
+// const handleVerifyEmail = async () => {
+//   isLoading.value = true;
 
-  try {
-    const response = await http.post("/get_code", {
-      email: email.value,
-    });
-    console.log(response);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    isLoading.value = false;
-  }
-};
+//   try {
+//     const response = await http.post("/get_code", {
+//       email: email.value,
+//     });
+//     console.log(response);
+//   } catch (err) {
+//     console.log(err);
+//   } finally {
+//     isLoading.value = false;
+//   }
+// };
 
 // 发送新用户信息到服务器
 const handleSubmit = async () => {

@@ -10,4 +10,12 @@ const callARK = axios.create({
   },
 });
 
-export { callARK };
+const callProxy = axios.create({
+  baseURL: "/.netlify/functions/get-data",
+  timeout: 20000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export { callARK, callProxy };

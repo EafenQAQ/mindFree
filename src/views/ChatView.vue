@@ -157,7 +157,7 @@ import ChatBar from "../components/ChatBar.vue";
 import userAvatar from "../assets/avatars/head_5.jpg";
 import assistantAvatar from "../assets/logo.webp";
 import usePopSound from "../assets/audios/popSound_1.wav";
-import { callARK } from "../utils/axios";
+import { callARK, callProxy } from "../utils/axios";
 
 // 状态管理
 const userInput = ref("");
@@ -365,11 +365,30 @@ const sendMessage = async () => {
       });
     }
 
-    // 发送请求到llm
-    const res = await callARK.post("/", {
-      model: glm_model,
-      messages: currentChat.value.messages,
-    });
+    // --------------------
+    // 根据环境选择是否走代理
+    // --------------------
+
+    // 如果是本地开发环境，不走代理
+
+    let res;
+
+    if (import.meta.env.DEV) {
+      console.log("开发环境")
+      res = await callARK.post("/", {
+        model: glm_model,
+        messages: currentChat.value.messages,
+      });
+
+    } else {
+      res = await callProxy.post("/", {
+        model: glm_model,
+        messages: currentChat.value.messages,
+      });
+
+    }
+
+
     // 添加AI回复
     currentChat.value.messages.push({
       role: "assistant",

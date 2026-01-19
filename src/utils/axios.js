@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_KEY } from "../api/ARK_API";
+import { API_KEY, ARK_url } from "./chooseModel";
 
 const callARK = axios.create({
-  baseURL: "https://ark.cn-beijing.volces.com/api/v3/chat/completions",
+  baseURL: ARK_url,
   timeout: 40000,
   headers: {
     "Content-Type": "application/json",
@@ -10,13 +10,4 @@ const callARK = axios.create({
   },
 });
 
-const call_big_model = axios.create({
-  baseURL: "https://open.bigmodel.cn/api/paas/v4/",
-  timeout: 20000,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  },
-});
-
-export { callARK, call_big_model };
+export { callARK };

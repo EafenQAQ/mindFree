@@ -149,7 +149,7 @@
 
 <script setup>
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-import { glm_model } from "../api/ARK_API";
+import { glm_model } from "../utils/chooseModel";
 import { uid } from "uid";
 import ChatBar from "../components/ChatBar.vue";
 
@@ -157,7 +157,7 @@ import ChatBar from "../components/ChatBar.vue";
 import userAvatar from "../assets/avatars/head_5.jpg";
 import assistantAvatar from "../assets/logo.webp";
 import usePopSound from "../assets/audios/popSound_1.wav";
-import { call_big_model, callARK } from "../utils/axios";
+import { callARK } from "../utils/axios";
 
 // 状态管理
 const userInput = ref("");

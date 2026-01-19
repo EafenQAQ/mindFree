@@ -119,6 +119,8 @@ const loginFail = ref(false);
 const failedMes = ref(null)
 const isLoading = ref(false)
 
+let timer = null;
+
 const handleSubmit = async () => {
   isLoading.value = true
 
@@ -127,7 +129,7 @@ const handleSubmit = async () => {
     password: passwd.value,
   });
 
-  let timer = null;
+
   if (error) {
     loginFail.value = true;
 

@@ -36,13 +36,13 @@ const router = createRouter({
 
 // 判断用户登录状态
 
-router.beforeEach((to, from, next) => {
-  const userStore = useUserInfoStore();
-  if (to.meta.requiresAuth) {
-    userStore.getUserState(next);
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const userStore = useUserInfoStore();
+//   if (to.meta.requiresAuth) {
+//     userStore.getUserState(next);
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

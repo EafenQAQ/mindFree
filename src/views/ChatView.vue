@@ -251,7 +251,7 @@
 
 <script setup>
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-import { modelID, modelID_dsR1 } from "../api/ARK_API";
+import { modelID, doubaoID_lite } from "../api/ARK_API";
 import { uid } from "uid";
 import ChatBar from "../components/ChatBar.vue";
 import callARK from "../utils/axios";
@@ -468,7 +468,7 @@ const sendMessage = async () => {
 
     // 发送请求到llm
     const res = await callARK.post("/", {
-      model: modelID_dsR1,
+      model: doubaoID_lite,
       messages: currentChat.value.messages,
     });
     // 添加AI回复

@@ -21,7 +21,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span>邮箱或密码错误</span>
+        <span v-if="failedMes">{{ failedMes }}</span>
       </div>
     </div>
 
@@ -57,9 +57,8 @@
           title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
       </label>
       <p class="validator-hint hidden">
-        Must be more than 8 characters, including
-        <br />At least one number <br />At least one lowercase letter <br />At
-        least one uppercase letter
+        密码必须超过8个字符，包括:
+        <br />至少一个数字 <br />至少一个小写字母 <br />至少一个大写字母
       </p>
       <!-- 验证码 -->
       <!-- <input type="text" required placeholder="请输入验证码" class="input" /> -->
@@ -77,8 +76,12 @@
       </fieldset>
 
       <!-- 按钮 -->
-      <button class="btn btn-outline btn-accent w-full max-w-[310px]">
-        登录
+      <button :disabled="isLoading" class="btn btn-outline btn-accent w-full max-w-[310px] relative">
+        <span>登录</span>
+        <span v-if="isLoading" class="absolute right-4 w-4 h-4">
+          <Spinner />
+        </span>
+
       </button>
       <!-- 跳转到注册 -->
       <div class="flex items-center justify-center gap-1">
@@ -86,10 +89,7 @@
         <RouterLink :to="{ name: 'signup' }">
           <span class="text-accent hover:text-green-500">注册</span>
         </RouterLink>
-        <button :hidden="true" type="button" @click="forTest"
-          class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">
-          test
-        </button>
+
       </div>
     </form>
   </div>
@@ -103,6 +103,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { errorMessages } from "vue/compiler-sfc";
 import { useUserInfoStore } from "../Stores/UserInfo";
+import Spinner from "../components/Spinner.vue";
 const router = useRouter();
 const userStore = useUserInfoStore();
 
@@ -112,17 +113,28 @@ const passwd = ref("");
 const loginSuccess = ref(false);
 const loginFail = ref(false);
 
+const failedMes = ref(null)
+const isLoading = ref(false)
+
 const handleSubmit = async () => {
-  console.log("submitted!");
+  isLoading.value = true
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: passwd.value,
   });
+
+
   if (error) {
+    loginFail.value = true;
     if (error.message === "Invalid login credentials") {
-      loginFail.value = !loginFail.value;
-    } else {
-      alert("登录失败");
+      failedMes.value = "邮箱或密码错误"
+    } else if (error.message === "Email not confirmed") {
+      failedMes.value = "邮箱未验证：请去邮箱检查邮件"
+
+    }
+    else {
+      failedMes.value = "登录失败"
     }
   } else {
     loginSuccess.value = !loginSuccess.value;
@@ -131,6 +143,8 @@ const handleSubmit = async () => {
       router.push({ name: "chatView" });
     }, 2000);
   }
+
+  isLoading.value = false
 };
 const forTest = async () => {
   const LocalUser = await supabase.auth.getSession();

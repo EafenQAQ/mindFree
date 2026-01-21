@@ -1,5 +1,231 @@
-# Vue 3 + Vite
+# MindFree
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+<div align="center">
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+![Vue 3](https://img.shields.io/badge/Vue-3.5.13-4FC08D?style=flat&logo=vue.js&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0.9-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-2.49.3-3ECF8E?style=flat&logo=supabase&logoColor=white)
+
+**一款基于 AI 的心理咨询聊天应用**
+
+当你感到担忧、悲伤、压力或单纯想要倾诉时，MindFree 就像一个可以倾听你烦恼并帮助你缓解情绪的朋友。
+
+[功能特性](#功能特性) • [快速开始](#快速开始) • [项目结构](#项目结构) • [技术栈](#技术栈)
+
+</div>
+
+---
+
+## 📖 项目简介
+
+MindFree 是一款自助 AI 心理咨询工具，采用人本主义心理咨询师角色，运用来访者中心疗法。它提供无条件的积极关注、共情和真诚，帮助用户更深入地理解自己的感受和需求。
+
+### 核心理念
+
+- **不评判、不指责、不强行提供建议**，而是反映来访者的感受
+- **使用开放式问题** 鼓励自我探索
+- **共情回应** 用户的困惑和情绪
+- **关注当下体验**，帮助用户觉察内在状态
+
+---
+
+## ✨ 功能特性
+
+- 🔐 **用户认证** - 基于 Supabase 的用户注册、登录系统
+- 💬 **智能对话** - 集成 GLM-4.7 AI 模型，提供专业的心理咨询对话
+- 📝 **多会话管理** - 支持创建、切换、编辑、删除多个聊天会话
+- 💾 **本地存储** - 聊天历史自动保存到本地存储
+- 🎨 **精美 UI** - 基于 Tailwind CSS + DaisyUI 的现代化界面
+- 📱 **响应式设计** - 完美适配桌面端和移动端
+- 🔒 **安全代理** - 生产环境使用 Netlify Functions 保护 API 密钥
+
+---
+
+## 🚀 快速开始
+
+### 环境要求
+
+- Node.js >= 18.0.0
+- npm 或 pnpm 或 yarn
+
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 环境配置
+
+在项目根目录创建 `.env` 文件，配置以下环境变量：
+
+```env
+# LLM API 密钥 (火山引擎 ARK)
+VITE_LLM_API_KEY=your_api_key_here
+
+# Supabase 配置 (已在 src/utils/supabase.js 中配置)
+# 如需修改，请更新 supabaseUrl 和 supabaseKey
+```
+
+### 本地开发
+
+```bash
+npm run dev
+```
+
+访问 [http://localhost:5173](http://localhost:5173) 查看应用。
+
+### 构建生产版本
+
+```bash
+npm run build
+```
+
+构建产物将输出到 `dist` 目录。
+
+### 预览生产构建
+
+```bash
+npm run preview
+```
+
+---
+
+## 📁 项目结构
+
+```
+mindFree/
+├── src/
+│   ├── auth/                 # 认证相关页面
+│   │   ├── Login.vue        # 登录页面
+│   │   └── Signup.vue       # 注册页面
+│   ├── components/          # 公共组件
+│   │   ├── ChatBar.vue      # 聊天栏组件
+│   │   ├── HeroArea.vue     # 首页 Hero 区域
+│   │   ├── NavBar.vue       # 导航栏
+│   │   └── Spinner.vue      # 加载动画
+│   ├── views/               # 页面视图
+│   │   ├── HomeView.vue     # 首页
+│   │   └── ChatView.vue     # 聊天页面
+│   ├── router/              # 路由配置
+│   │   └── index.js
+│   ├── Stores/              # Pinia 状态管理
+│   │   └── UserInfo.js      # 用户信息 Store
+│   ├── utils/               # 工具函数
+│   │   ├── axios.js         # Axios 实例配置
+│   │   ├── chooseModel.js   # AI 模型选择
+│   │   ├── supabase.js      # Supabase 客户端
+│   │   └── anime.js         # 动画效果
+│   ├── assets/              # 静态资源
+│   │   ├── avatars/         # 头像图片
+│   │   ├── audios/          # 音效文件
+│   │   └── ...
+│   ├── App.vue              # 根组件
+│   ├── main.js              # 应用入口
+│   └── style.css            # 全局样式
+├── netlify/
+│   └── functions/
+│       └── get-data.js      # Netlify Serverless Function (API 代理)
+├── public/                  # 公共静态资源
+├── index.html               # HTML 模板
+├── vite.config.js           # Vite 配置
+├── package.json             # 项目依赖
+└── README.md                # 项目文档
+```
+
+---
+
+## 🛠 技术栈
+
+### 前端
+
+| 技术         | 版本   | 说明                   |
+| ------------ | ------ | ---------------------- |
+| Vue          | 3.5.13 | 渐进式 JavaScript 框架 |
+| Vite         | 6.2.0  | 下一代前端构建工具     |
+| Vue Router   | 4.5.0  | Vue.js 官方路由        |
+| Pinia        | 3.0.1  | Vue 状态管理库         |
+| Tailwind CSS | 4.0.9  | 原子化 CSS 框架        |
+| DaisyUI      | 5.0.6  | Tailwind CSS 组件库    |
+| Anime.js     | 3.2.2  | JavaScript 动画引擎    |
+| Axios        | 1.8.4  | HTTP 客户端            |
+
+### 后端服务
+
+| 服务              | 说明                       |
+| ----------------- | -------------------------- |
+| Supabase          | 用户认证与数据库           |
+| 火山引擎 ARK      | AI 模型 API (GLM-4.7)      |
+| Netlify Functions | Serverless 函数 (API 代理) |
+
+---
+
+## 🔧 配置说明
+
+### AI 模型配置
+
+当前使用的 AI 模型为 **GLM-4.7**，配置位于 [`src/utils/chooseModel.js`](src/utils/chooseModel.js:6)：
+
+```javascript
+const glm_model = "ep-20260119234415-cd6tr"; // GLM-4.7
+```
+
+如需切换模型，可修改此处的模型 ID。
+
+### API 请求配置
+
+- **开发环境**: 直接调用火山引擎 ARK API
+- **生产环境**: 通过 Netlify Functions 代理请求，保护 API 密钥
+
+配置位于 [`src/utils/axios.js`](src/utils/axios.js:1)。
+
+### Supabase 配置
+
+Supabase 客户端配置位于 [`src/utils/supabase.js`](src/utils/supabase.js:1)。
+
+---
+
+## 📦 部署
+
+### Netlify 部署
+
+1. 将代码推送到 GitHub 仓库
+2. 在 Netlify 中导入项目
+3. 配置构建命令：`npm run build`
+4. 配置发布目录：`dist`
+5. 在 Netlify 环境变量中添加：
+   - `API_KEY`: 你的 LLM API 密钥
+   - `API_URL`: `https://ark.cn-beijing.volces.com/api/v3/chat/completions`
+
+### 其他平台
+
+项目为标准的 Vite 项目，可部署到任何支持静态网站托管的平台（如 Vercel、GitHub Pages 等）。
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+---
+
+## 📄 许可证
+
+MIT License
+
+---
+
+## 📮 联系方式
+
+如有问题或建议，欢迎通过以下方式联系：
+
+- 提交 [Issue](../../issues)
+- 发送邮件
+
+---
+
+<div align="center">
+
+**Made with ❤️ by MindFree Team**
+
+</div>

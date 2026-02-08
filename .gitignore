@@ -26,3 +26,5 @@ ARK_API.js
 
 .env
 resume.md
+# Local Netlify folder
+.netlify

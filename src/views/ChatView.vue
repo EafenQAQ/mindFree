@@ -148,7 +148,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { computed, nextTick, onMounted, ref, useTemplateRef } from "vue";
 import { glm_model } from "../utils/chooseModel";
 import { uid } from "uid";
 import ChatBar from "../components/ChatBar.vue";
@@ -412,11 +412,17 @@ const sendMessage = async () => {
     saveChats();
   }
   // 滚动到底部
-  setTimeout(() => {
-    if (chatBox.value) {
-      chatBox.value.scrollTop = chatBox.value.scrollHeight;
-    }
-  }, 100);
+  // setTimeout(() => {
+  //   if (chatBox.value) {
+  //     chatBox.value.scrollTop = chatBox.value.scrollHeight;
+  //   }
+  // }, 100);
+  await nextTick();
+
+  if (chatBox.value) {
+    chatBox.value.scrollTop = chatBox.value.scrollHeight;
+  }
+
 };
 </script>
 
